@@ -1,0 +1,35 @@
+name: testenv
+
+on:
+  push:
+    branches: ['master']
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Maven Build
+        run: echo Completed Build.
+    
+  test:
+    needs: build
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Completed Integration Tests.
+  qa:
+    needs: test
+    name: QA Deployment
+    environment: QA
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Completed QA Deployment.
+      
+  prod:
+    needs: qa
+    name: Prod Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Completed Prod deployment.
