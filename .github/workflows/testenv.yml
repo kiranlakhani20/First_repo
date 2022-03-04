@@ -30,6 +30,7 @@ jobs:
   prod:
     needs: qa
     name: Prod Deployment
+    environment: Prod
     runs-on: ubuntu-latest
     steps:
       - run: echo Completed Prod deployment.
