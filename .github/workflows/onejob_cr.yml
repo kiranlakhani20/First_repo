@@ -1,4 +1,4 @@
-name: onejob
+name: onejob_cr
 
 on:
   push:
