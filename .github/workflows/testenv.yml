@@ -10,7 +10,18 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
       - name: Maven Build
+        run: mvn clean install -DskipTests=true
+        
+      - name: Build
         run: echo Completed Build.
     
   test:
@@ -18,14 +29,39 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     steps:
-      - run: echo Completed Integration Tests.
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
+        
+      - name: Tests
+        run: echo Completed Integration Tests.
+        
   qa:
     needs: test
     name: QA Deployment
     environment: QA
     runs-on: ubuntu-latest
     steps:
-      - run: echo Completed QA Deployment.
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
+        
+      - name: QADeployment
+        run: echo Completed QA Deployment.
       
   prod:
     needs: qa
