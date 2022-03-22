@@ -43,6 +43,19 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GHP_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             
+      - name: Sonar Action
+        uses: kiranlakhani20/servicenow-devops-sonar@master
+        with:
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-pass: ${{ secrets.SN_DEVOPS_PASSWD }}
+          instance-name: ${{ secrets.SN_INSTANCE_NAME }}
+          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          sonar-host-url: ${{ secrets.SONAR_URL }}
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
+          sonar-org-key: ${{ secrets.SONAR_ORG_KEY }}
+
+            
       - name: Publish Artifact
         if: always()
         uses: actions/upload-artifact@v2-preview
