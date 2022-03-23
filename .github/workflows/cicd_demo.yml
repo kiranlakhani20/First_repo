@@ -41,7 +41,7 @@ jobs:
             
             
       - name: Sonar Action
-        uses: velivalab/sonar-github-action@master
+        uses: velivalab/servicenow-devops-sonar@master
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-pass: ${{ secrets.SN_DEVOPS_PASSWD }}
