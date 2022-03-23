@@ -23,13 +23,6 @@ jobs:
       
       - name: Run JUnit Tests
         run: mvn test -Dmaven.test.failure.ignore=true surefire-report:report
-        
-      - name: Publish JUnit Test Report
-        if: always()
-        uses: actions/upload-artifact@v2-preview
-        with:
-          name: 'junit-test-report'
-          path: target/surefire-reports/emailable-report.html
       
       - name: Sonar Cloud Analysis
         if: success() # always() failure() success()
@@ -59,13 +52,6 @@ jobs:
           sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
           sonar-org-key: ${{ secrets.SONAR_ORG_KEY }}
 
-            
-      - name: Publish Artifact
-        if: always()
-        uses: actions/upload-artifact@v2-preview
-        with:
-          name: 'artifact'
-          path: target/First_repo-0.0.1-SNAPSHOT.jar
           
   integrationTest:
     needs: build
