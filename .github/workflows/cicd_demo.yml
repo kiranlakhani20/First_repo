@@ -52,7 +52,7 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-pass: ${{ secrets.SN_DEVOPS_PASSWD }}
-          instance-name: ${{ secrets.SN_INSTANCE_NAME }}
+          instance-name: 'empsfatima4.service-now.com'
           tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           sonar-host-url: ${{ secrets.SONAR_URL }}
