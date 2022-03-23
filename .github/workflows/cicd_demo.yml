@@ -41,7 +41,7 @@ jobs:
             -Dsonar.login=$SONAR_TOKEN
         env:
             GITHUB_TOKEN: ${{ secrets.GHP_TOKEN }}
-            SONAR_TOKEN: 'eb06169b64066d37f4ee8fa8235a5f889e947053'
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
             SONAR_URL: ${{ secrets.SONAR_URL }}
             SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}
@@ -52,7 +52,7 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-pass: ${{ secrets.SN_DEVOPS_PASSWD }}
-          instance-name: 'empsfatima4.service-now.com'
+          instance-name: ${{ secrets.SN_INSTANCE_NAME }}
           tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           sonar-host-url: ${{ secrets.SONAR_URL }}
