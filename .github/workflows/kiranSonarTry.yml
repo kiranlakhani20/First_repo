@@ -1,4 +1,4 @@
-name: cicd_demo
+name: kiranSonarTry_demo
     
 on:
   push:
