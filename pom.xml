@@ -57,16 +57,6 @@
 				</configuration>
 			</plugin>
 			 
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12.2</version>
-				<configuration>
-					<suiteXmlFiles>
-						<suiteXmlFile>./testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-				</configuration>
-			</plugin>
-
 			<!-- SonarQube Plugin -->
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
