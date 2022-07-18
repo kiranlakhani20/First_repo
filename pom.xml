@@ -6,6 +6,12 @@
 	<groupId>org.test</groupId>
 	<artifactId>First_repo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+<server>
+	<id>my.server</id>
+	<username>sysUser</username>
+	<password>devops123</password>
+</server>
 
 	<dependencies>
 		<dependency>
