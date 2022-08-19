@@ -2,9 +2,9 @@ name: kiranSonarTry_demo
     
 on:
   push:
-    branches: ['main']
+    branches: ['sonarAnalysis']
   pull_request:
-    branches: ['main']
+    branches: ['sonarAnalysis']
   workflow_dispatch:
 
 jobs:
