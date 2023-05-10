@@ -50,6 +50,10 @@ jobs:
           sonar-host-url: ${{ secrets.SONAR_URL }}
           sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
           
+  changeApproval:
+    name: ServiceNow Change Approval
+    runs-on: ubuntu-latest
+    steps:     
       - name: ServiceNow Change Approval
         uses: ServiceNow/servicenow-devops-change@dev
         id: create
@@ -63,4 +67,6 @@ jobs:
           change-request: '{"attributes": {"short_description": "Automated Software Deployment"}}'
           interval: '100'
           timeout: '3600'
-      
+  
+          
+   
