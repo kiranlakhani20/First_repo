@@ -8,27 +8,20 @@ on:
   workflow_dispatch:
 
 jobs:
-    bash-example:
-        runs-on: ubuntu-latest
-        env:
-          MY_NAME: "Mona The Octocat"
-        steps:
-          - name: bash-version
-            run: echo "::add-mask::$MY_NAME"
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v2
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
       
-#       - name: Setup JDK 11 for Sonar Cloud
-#         uses: actions/setup-java@v1
-#         with:
-#             java-version: 11
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
       
-#       - name: Maven Build
-#         run: mvn clean install -DskipTests=true
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
         
 #       - name: Sonar Cloud Analysis
 #         if: success() # always() failure() success()
@@ -59,6 +52,7 @@ jobs:
           
   changeApproval:
     name: ServiceNow Change Approval
+    needs: build
     runs-on: ubuntu-latest
     steps:     
       - name: ServiceNow Change Approval
