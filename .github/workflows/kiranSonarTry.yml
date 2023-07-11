@@ -70,7 +70,8 @@ jobs:
           interval: '100'
           timeout: '3600'
   postDeploy:
-    name: changeApproval
+    name: Servicenow Post Deploy
+    needs: changeApproval
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
