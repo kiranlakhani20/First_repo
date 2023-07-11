@@ -69,8 +69,25 @@ jobs:
           change-request: '{"attributes": {"short_description": "Automated Software Deployment"}}'
           interval: '100'
           timeout: '3600'
+  postDeploy:
+    name: changeApproval
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
           
+#   SonarStep:
 #       - name: Sonar Cloud Analysis
+#         needs: changeApproval
+#         runs-on: ubuntu-latest
 #         if: success() # always() failure() success()
 #         run: >
 #             mvn -B verify -DskipTests sonar:sonar
