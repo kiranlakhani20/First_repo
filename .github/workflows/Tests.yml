@@ -1,0 +1,46 @@
+name: GitHub Actions Workflow with SNOW custom tasks
+on: workflow_dispatch
+jobs:
+    build:
+      name: Build
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
+        
+      - name: Build
+        run: echo Completed Build.
+        
+    test:
+        name: Test
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: ServiceNow DevOps Unit Test Results
+              uses: ServiceNow/servicenow-devops-test-report@main
+              with:
+                  devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+                  devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+                  instance-url: ${{ secrets.SN_INSTANCE_URL }}
+                  tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+                  # Job Name
+                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  # Github Context
+                  context-github: ${{ toJSON(github) }}
+                  # JUnit xml report file name with path
+                  xml-report-filename: target/surefire-reports/testng-results.xml # if only JUnit tests, use target/surefire-reports/testng-results.xml
+                                                                                  # if both JUnit & TestNG tests, use target/surefire-reports/testng-junit-results/testng-results.xml
+                
+  
+          
+   
+             
+       
