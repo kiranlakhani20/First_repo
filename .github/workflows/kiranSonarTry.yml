@@ -50,6 +50,21 @@ jobs:
           sonar-host-url: ${{ secrets.SONAR_URL }}
           sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
           
+
+      - name: ServiceNow Register Artifact
+#         uses: ServiceNow/servicenow-devops-register-artifact@main
+        uses: ServiceNow/servicenow-devops-register-artifact@v1.34.2
+        #uses: ServiceNow/servicenow-devops-register-artifact@scratch/CSTASK622895
+        with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }} 
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Register Artifact test error'
+          artifacts: '[{"name": "app-build","version": "1.${{ github.run_number }}","semanticVersion": "1.${{ github.run_number }}.0","repositoryName": "${{ github.repository }}"}]'
+          
   changeApproval:
     name: ServiceNow Change Approval
     needs: build
