@@ -65,7 +65,7 @@ jobs:
           job-name: 'Build'
      #     artifacts: '[{"name": "app-build","version": "1.${{ github.run_number }}","semanticVersion": "1.${{ github.run_number }}.0","repositoryName": "${{ github.repository }}"}]'
           
-          artifacts: '[{"name": "app-build","version": "1.182","semanticVersion": "1.182.0","repositoryName": "${{ github.repository }}"}]'
+          artifacts: '[{"name": "app-build-1.182","version": "1.182","semanticVersion": "1.182.0","repositoryName": "${{ github.repository }}"}]'
           
   changeApproval:
     name: ServiceNow Change Approval
