@@ -23,49 +23,49 @@ jobs:
       - name: Maven Build
         run: mvn clean install -DskipTests=true
         
-#       - name: Sonar Cloud Analysis
-#         if: success() # always() failure() success()
-#         run: >
-#             mvn -B verify -DskipTests sonar:sonar
-#             -Dsonar.projectKey=$SONAR_PROJECT_KEY
-#             -Dsonar.organization=$SONAR_ORG_KEY
-#             -Dsonar.host.url=$SONAR_URL
-#             -Dsonar.login=$SONAR_TOKEN
-#         env:
-#             GITHUB_TOKEN: ${{ secrets.GHP_TOKEN }}
-#             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#             SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-#             SONAR_URL: ${{ secrets.SONAR_URL }}
-#             SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}
+      - name: Sonar Cloud Analysis
+        if: success() # always() failure() success()
+        run: >
+            mvn -B verify -DskipTests sonar:sonar
+            -Dsonar.projectKey=$SONAR_PROJECT_KEY
+            -Dsonar.organization=$SONAR_ORG_KEY
+            -Dsonar.host.url=$SONAR_URL
+            -Dsonar.login=$SONAR_TOKEN
+        env:
+            GITHUB_TOKEN: ${{ secrets.GHP_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+            SONAR_URL: ${{ secrets.SONAR_URL }}
+            SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}
             
-#       - name: ServiceNow DevOps Sonar Scan Results
-#         uses: ServiceNow/servicenow-devops-sonar@main
-#         with:
-#           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-#           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWD }}
-#           instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-#           tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
-#           job-name: 'Build'
-#           context-github: ${{ toJSON(github) }}
-#           sonar-host-url: ${{ secrets.SONAR_URL }}
-#           sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
-          
-
-      - name: ServiceNow Register Package
-#         uses: ServiceNow/servicenow-devops-register-artifact@main
-        uses: ServiceNow/servicenow-devops-register-package@v1.34.2
-        #uses: ServiceNow/servicenow-devops-register-artifact@scratch/CSTASK622895
+      - name: ServiceNow DevOps Sonar Scan Results
+        uses: ServiceNow/servicenow-devops-sonar@main
         with:
-          #devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
-          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }} 
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWD }}
           instance-url: ${{ secrets.SN_INSTANCE_NAME }}
           tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
-          context-github: ${{ toJSON(github) }}
           job-name: 'Build'
-     #     artifacts: '[{"name": "app-build","version": "1.${{ github.run_number }}","semanticVersion": "1.${{ github.run_number }}.0","repositoryName": "${{ github.repository }}"}]'          
-          artifacts: '[{"name": "app-build","version": "1.182","semanticVersion": "1.182.0","repositoryName": "${{ github.repository }}"}]'
-          package-name: 'hardening1.39.war'
+          context-github: ${{ toJSON(github) }}
+          sonar-host-url: ${{ secrets.SONAR_URL }}
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
+          
+
+#       - name: ServiceNow Register Package
+# #         uses: ServiceNow/servicenow-devops-register-artifact@main
+#         uses: ServiceNow/servicenow-devops-register-package@v1.34.2
+#         #uses: ServiceNow/servicenow-devops-register-artifact@scratch/CSTASK622895
+#         with:
+#           #devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+#           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }} 
+#           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWD }}
+#           instance-url: ${{ secrets.SN_INSTANCE_NAME }}
+#           tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+#           context-github: ${{ toJSON(github) }}
+#           job-name: 'Build'
+#      #     artifacts: '[{"name": "app-build","version": "1.${{ github.run_number }}","semanticVersion": "1.${{ github.run_number }}.0","repositoryName": "${{ github.repository }}"}]'          
+#           artifacts: '[{"name": "app-build","version": "1.182","semanticVersion": "1.182.0","repositoryName": "${{ github.repository }}"}]'
+#           package-name: 'hardening1.39.war'
           
   changeApproval:
     name: ServiceNow Change Approval
@@ -86,21 +86,21 @@ jobs:
           change-request: '{"attributes": {"short_description": "Automated Software Deployment"}}'
           interval: '100'
           timeout: '3600'
-  postDeploy:
-    name: Servicenow Post Deploy
-    needs: changeApproval
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+  # postDeploy:
+  #   name: Servicenow Post Deploy
+  #   needs: changeApproval
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
       
-      - name: Setup JDK 11 for Sonar Cloud
-        uses: actions/setup-java@v1
-        with:
-            java-version: 11
+  #     - name: Setup JDK 11 for Sonar Cloud
+  #       uses: actions/setup-java@v1
+  #       with:
+  #           java-version: 11
       
-      - name: Maven Build
-        run: mvn clean install -DskipTests=true
+  #     - name: Maven Build
+  #       run: mvn clean install -DskipTests=true
           
 #   SonarStep:
 #       - name: Sonar Cloud Analysis
