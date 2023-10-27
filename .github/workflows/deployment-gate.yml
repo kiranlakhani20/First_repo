@@ -1,0 +1,59 @@
+# This workflow uses ServiceNow custom actions that are certified by ServiceNow.
+
+name: GitHub Deployment Gate Workflow
+
+on: workflow_dispatch
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+  #   types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn clean compile
+
+ 
+  change:
+    name: 'Change'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:     
+    - name: ServiceNow DevOps Change Automation
+    # You may pin to the exact commit or the version.            
+      uses: ServiceNow/servicenow-devops-change@v2.0.0
+      with:
+          # ServiceNow Instance URL
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          # Devops Integration Token
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          # Orchestration Tool Id
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # Display Name of the Job
+          job-name: 'Change'
+          # Github Context
+          context-github: ${{ toJSON(github) }}
+          change-request: '{"setCloseCode":"true","attributes":{"short_description":"Automated Software Deployment","description":"Automated Software Deployment.","assignment_group":"a715cd759f2002002920bde8132e7018","implementation_plan":"Software update is tested and results can be found in Test Summaries Tab; When the change is approved the implementation happens automated by the CICD pipeline within the change planned start and end time window.","backout_plan":"When software fails in production, the previous software release will be re-deployed.","test_plan":"Testing if the software was successfully deployed"}}'
+          
+  # uncomment below lines of code to create change request using deployment gates, indent code if necessary
+          deployment-gate: '{"environment":"deployment_gate","jobName":"Deploy"}'
+
+  deploy:
+    name: 'Deploy'
+    needs: change
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run deployment scripts
+      run: echo 'Deployment step in progress...'
