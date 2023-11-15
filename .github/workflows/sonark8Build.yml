@@ -1,4 +1,4 @@
-name: sonark8Build
+name: Build
 
 on:
   push:
