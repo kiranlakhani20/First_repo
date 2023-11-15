@@ -16,6 +16,12 @@
 		</dependency>
 
 		<dependency>
+	            <groupId>org.apache.commons</groupId>
+	            <artifactId>commons-collections4</artifactId>
+	            <version>4.0</version> <!-- This version has known vulnerabilities -->
+       		 </dependency>
+
+		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20180130</version>
