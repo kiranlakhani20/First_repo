@@ -16,11 +16,12 @@
 		</dependency>
 
 		<dependency>
-	            <groupId>org.apache.commons</groupId>
-	            <artifactId>commons-collections4</artifactId>
-	            <version>4.0</version> <!-- This version has known vulnerabilities -->
-       		 </dependency>
-
+		        <groupId>org.owasp.webgoat</groupId>
+		        <artifactId>webgoat</artifactId>
+		        <version>8.0.0</version>
+		        <scope>test</scope>
+    		</dependency>
+		
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
